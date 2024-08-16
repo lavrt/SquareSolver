@@ -7,6 +7,7 @@ bool input_is_incorrect(double, double, double);
 bool double_equals(double, double, double);
 double solving_linear_equation(double, double);
 void solving_quadratic_equation(double, double, double, double *, double *);
+void solving_if_complex(double, double, double);
 
 int main(void)
 {
@@ -28,17 +29,19 @@ int main(void)
         double discriminant = b * b - 4 * a * c;
         double x1, x2;
         solving_quadratic_equation(a, b, discriminant, &x1, &x2);
+
         if (double_equals(discriminant, 0, epsilon))
         {
             printf("\nThe equation is quadratic and has two equal solutions.\nAnswer: x1 = %lf, x2 = %lf\n", x1, x2);
         }
-        else if (discriminant < 0)
-        {
-            printf("\nThere are no solutions in real numbers.\n");
-        }
         else if (discriminant > 0)
         {
             printf("\nThe equation is quadratic and has two different solutions.\nAnswer: x1 = %lf, x2 = %lf\n", x1, x2);
+        }
+        else if (discriminant < 0)
+        {
+            printf("\nThere are no solutions in real numbers.\n");
+            solving_if_complex(a, b, discriminant);
         }
     }
 
@@ -106,8 +109,11 @@ double solving_linear_equation(double b, double c)
 
 void solving_quadratic_equation(double a, double b, double discriminant, double * ad_x1, double * ad_x2)
 {
-    *ad_x1 = (-b - sqrt(discriminant)) / (2 * a);
-    *ad_x2 = (-b + sqrt(discriminant)) / (2 * a);
+    if (discriminant > 0)
+    {
+        *ad_x1 = (-b - sqrt(discriminant)) / (2 * a);
+        *ad_x2 = (-b + sqrt(discriminant)) / (2 * a);
+    }
 }
 
 
@@ -120,3 +126,10 @@ bool double_equals(double num1, double num2, double epsilon)
 
 
 
+
+void solving_if_complex(double a, double b, double discriminant)
+{
+    printf("There is a solution in complex numbers.\n");
+    printf("Answer: x1 = %lf%+lf*i, x2 = %lf%+lf*i\n", -b / (2 * a), -sqrt(-discriminant) / (2 * a),
+            -b / (2 * a), sqrt(-discriminant) / (2 * a));
+}
