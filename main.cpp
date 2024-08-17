@@ -10,6 +10,7 @@ bool double_equals(double num1, double num2);
 double solving_linear_equation(double coeff_b, double coeff_c);
 void solving_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
 bool program_continue(void);
+void clear_buffer(void);
 
 int main(void)
 {
@@ -68,24 +69,25 @@ void get_num(double * coeff_a, double * coeff_b, double * coeff_c)
         while (scanf("%lf", coeff_a) != 1)
         {
             printf("\nPlease enter the correct numeric value.\nEnter a: ");
-            while (getchar() != '\n') continue;
+            clear_buffer();
         }
+        clear_buffer();
 
         printf("Enter b: ");
         while (scanf("%lf", coeff_b) != 1)
         {
             printf("\nPlease enter the correct numeric value.\nEnter b: ");
-            while (getchar() != '\n') continue;
+            clear_buffer();
         }
+        clear_buffer();
 
         printf("Enter c: ");
         while (scanf("%lf", coeff_c) != 1)
         {
             printf("\nPlease enter the correct numeric value.\nEnter c: ");
-            while (getchar() != '\n') continue;
+            clear_buffer();
         }
-
-        getchar();
+        clear_buffer();
 
         printf("\nThe equation you want to solve:\n");
         printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
@@ -96,7 +98,7 @@ void get_num(double * coeff_a, double * coeff_b, double * coeff_c)
         {
             printf("Enter 'y' or 'n' without quotes.\n");
             if (ch == '\n') continue;
-            while (getchar() != '\n') continue;
+            clear_buffer();
         }
 
         if (ch == 'y') break;
@@ -139,8 +141,14 @@ bool program_continue(void)
     {
         printf("Enter 'y' or 'q' without quotes.\n");
         if (ch == '\n') continue;
-        while (getchar() != '\n') continue;
+        clear_buffer();
     }
 
     return ch == 'y';
+}
+
+void clear_buffer(void)
+{
+    int ch = 0;
+    while ((ch = getchar() != '\n') && ch != EOF) continue;
 }
