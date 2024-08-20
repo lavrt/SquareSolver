@@ -1,66 +1,48 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+//#include <assert.h>
 
 const double epsilon = 1e-8;
 
-void program(void);
-void get_num(double * coeff_a, double * coeff_b, double * coeff_c);
+const int NO_SOLUTIONS = 0;    // enum
+const int ONE_SOLUTION = 1;
+const int TWO_SOLUTIONS = 2;
+const int ANY_NUMBER = 3;
+
+void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c);
+int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
+void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2);
 bool double_equals(double num1, double num2);
-double solving_linear_equation(double coeff_b, double coeff_c);
-void solving_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
 bool program_continue(void);
-void clear_buffer(void);
-void output_equation(double * coeff_a, double * coeff_b, double * coeff_c);
+int clear_buffer(void);
+void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 
 int main(void)
 {
     do
     {
-        program();
+        double coeff_a = 0;
+        double coeff_b = 0;
+        double coeff_c = 0;
+        double solution_x1 = 0;
+        double solution_x2 = 0;
+
+        program_get_num(&coeff_a, &coeff_b, &coeff_c);
+
+        program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
+
+        program_print_solutions(coeff_a, coeff_b, coeff_c, solution_x1, solution_x2);
+
+        printf("\nWould you like to solve another equation? ");
+
     } while (program_continue());
 
     return 0;
 }
 
-void program(void)
-{
-    double coeff_a = 0;
-    double coeff_b = 0;
-    double coeff_c = 0;
-
-    get_num(&coeff_a, &coeff_b, &coeff_c);
-
-    printf("The coefficients are saved.\n");
-
-    if (double_equals(coeff_a, 0))
-    {
-        printf("\nThe equation is linear.\nAnswer: x = %lf\n", solving_linear_equation(coeff_b, coeff_c));
-    }
-    else
-    {
-        double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
-        double solution_x1 = 0;
-        double solution_x2 = 0;
-        solving_quadratic_equation(coeff_a, coeff_b, discriminant, &solution_x1, &solution_x2);
-
-        if (double_equals(discriminant, 0))
-        {
-            printf("\nThe equation is quadratic and has two equal solutions.\nAnswer: x1 = %lf, x2 = %lf\n", solution_x1, solution_x2);
-        }
-        else if (discriminant > 0)
-        {
-            printf("\nThe equation is quadratic and has two different solutions.\nAnswer: x1 = %lf, x2 = %lf\n", solution_x1, solution_x2);
-        }
-        else if (discriminant < 0)
-        {
-            printf("\nThere are no solutions in real numbers.\n");
-        }  // add solving in complex numbers later
-    }
-}
-
-void get_num(double * coeff_a, double * coeff_b, double * coeff_c)
+void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 {
     do
     {
@@ -69,9 +51,14 @@ void get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 
         take_values(coeff_a, coeff_b, coeff_c);
 
-        output_equation(coeff_a, coeff_b, coeff_c);
+        print_equation(coeff_a, coeff_b, coeff_c);
 
-        if (program_continue()) break;
+        printf("\nAre the coefficients correct? ");
+        if (program_continue())            //get choice
+        {
+            printf("The coefficients are saved.\n");
+            break;
+        }
 
     } while (true);
 }
@@ -81,26 +68,9 @@ bool double_equals(double num1, double num2)
     return fabs(num1 - num2) < epsilon;
 }
 
-double solving_linear_equation(double coeff_b, double coeff_c)
-{
-    return -(coeff_b / coeff_c);
-}
-
-void solving_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2)
-{
-    if (discriminant >= 0)
-    {
-        *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
-        *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
-    }
-
-    *solution_x1 = NAN;
-    *solution_x2 = NAN;
-}
-
 bool program_continue(void)
 {
-    printf("\nDo you want to continue? Enter 'y' if you want to continue, otherwise enter 'n': ");
+    printf("Enter 'y' if you want to continue, otherwise enter 'n': ");
 
     int ch = 0;
     while ((ch = getchar()) != 'y' && ch != 'n')
@@ -114,10 +84,11 @@ bool program_continue(void)
     return ch == 'y';
 }
 
-void clear_buffer(void)
+int clear_buffer(void)
 {
     int ch = 0;
     while (((ch = getchar()) != '\n') && ch != EOF) continue;
+    return !(ch == '\n');
 }
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
@@ -147,8 +118,72 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     clear_buffer();
 }
 
-void output_equation(double * coeff_a, double * coeff_b, double * coeff_c)
+void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
 {
     printf("\nThe equation you want to solve:\n");
     printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
+}
+
+int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
+{
+/*  assert (std::isfinite (coeff_a));
+    assert (std::isfinite (coeff_b));
+    assert (std::isfinite (coeff_c));
+
+    assert (solution_x1 != NULL);
+    assert (solution_x2 != NULL);
+    assert (solution_x1 != solution_x2); */
+                                                    // разбить линейный и квадратичный случаи
+    if (double_equals(coeff_a, 0))
+    {
+        if (double_equals(coeff_b, 0))
+        {
+            return (double_equals(coeff_c, 0)) ? ANY_NUMBER : NO_SOLUTIONS;
+        }
+
+        *solution_x1 = -(coeff_c / coeff_b);
+        *solution_x2 = -(coeff_c / coeff_b);
+        return ONE_SOLUTION;
+    }
+
+    double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
+
+    if (double_equals(discriminant, 0))
+    {
+        *solution_x1 = -coeff_b / (2 * coeff_a);
+        *solution_x2 = -coeff_b / (2 * coeff_a);
+        return ONE_SOLUTION;
+    }
+
+    if (discriminant > 0)
+    {
+        *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
+        *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
+        return TWO_SOLUTIONS;
+    }
+
+    *solution_x1 = NAN;
+    *solution_x2 = NAN;
+    return NO_SOLUTIONS;
+}
+
+void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
+{
+    switch (program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2))      // вынести в переменную
+    {
+        case NO_SOLUTIONS:
+            printf("\nThe equation has no solutions.\n");
+            break;
+        case ONE_SOLUTION:
+            printf("\nThe equation has one solution. x = %lf.\n", solution_x1);
+            break;
+        case TWO_SOLUTIONS:
+            printf("\nThe equation has two solutions. x1 = %lf, x2 = %lf.\n", solution_x1, solution_x2);
+            break;
+        case ANY_NUMBER:
+            printf("\nThe solution to the equation is any number.\n");
+            break;
+        default:
+            printf("\nUnexpected error!\n");
+    }
 }
