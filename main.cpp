@@ -11,6 +11,8 @@ double solving_linear_equation(double coeff_b, double coeff_c);
 void solving_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
 bool program_continue(void);
 void clear_buffer(void);
+void output_equation(double * coeff_a, double * coeff_b, double * coeff_c);
+void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 
 int main(void)
 {
@@ -65,43 +67,11 @@ void get_num(double * coeff_a, double * coeff_b, double * coeff_c)
         printf("To get started, enter the values of the "
                 "coefficients of the quadratic equation.\n\n");
 
-        printf("Enter a: ");
-        while (scanf("%lf", coeff_a) != 1)
-        {
-            printf("\nPlease enter the correct numeric value.\nEnter a: ");
-            clear_buffer();
-        }
-        clear_buffer();
+        take_values(coeff_a, coeff_b, coeff_c);
 
-        printf("Enter b: ");
-        while (scanf("%lf", coeff_b) != 1)
-        {
-            printf("\nPlease enter the correct numeric value.\nEnter b: ");
-            clear_buffer();
-        }
-        clear_buffer();
+        output_equation(coeff_a, coeff_b, coeff_c);
 
-        printf("Enter c: ");
-        while (scanf("%lf", coeff_c) != 1)
-        {
-            printf("\nPlease enter the correct numeric value.\nEnter c: ");
-            clear_buffer();
-        }
-        clear_buffer();
-
-        printf("\nThe equation you want to solve:\n");
-        printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
-        printf("Enter 'y' if you want to continue or 'n' if you want to change the coefficients: ");
-
-        int ch = 0;
-        while ((ch = getchar()) != 'y' && ch != 'n')
-        {
-            printf("Enter 'y' or 'n' without quotes.\n");
-            if (ch == '\n') continue;
-            clear_buffer();
-        }
-
-        if (ch == 'y') break;
+        if (program_continue()) break;
 
     } while (true);
 }
@@ -123,23 +93,20 @@ void solving_quadratic_equation(double coeff_a, double coeff_b, double discrimin
         *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
         *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
     }
-    else if (discriminant < 0) // add solving in complex numbers later
-    {
-        *solution_x1 = NAN;
-        *solution_x2 = NAN;
-    }
+
+    *solution_x1 = NAN;
+    *solution_x2 = NAN;
 }
 
 bool program_continue(void)
 {
-    getchar();
-
-    printf("\n\n\nDo you want to solve the equation again? Enter 'y' if you want to continue or 'q' to exit: ");
+    printf("\nDo you want to continue? Enter 'y' if you want to continue, otherwise enter 'n': ");
 
     int ch = 0;
-    while ((ch = getchar()) != 'y' && ch != 'q')
+    while ((ch = getchar()) != 'y' && ch != 'n')
     {
-        printf("Enter 'y' or 'q' without quotes.\n");
+        if (ch != '\n')
+            printf("Enter 'y' or 'n' without quotes.\n");
         if (ch == '\n') continue;
         clear_buffer();
     }
@@ -150,5 +117,38 @@ bool program_continue(void)
 void clear_buffer(void)
 {
     int ch = 0;
-    while ((ch = getchar() != '\n') && ch != EOF) continue;
+    while (((ch = getchar()) != '\n') && ch != EOF) continue;
+}
+
+void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
+{
+    printf("Enter a: ");
+    while (scanf("%lf", coeff_a) != 1)
+    {
+        printf("\nPlease enter the correct numeric value.\nEnter a: ");
+        clear_buffer();
+    }
+    clear_buffer();
+
+    printf("Enter b: ");
+    while (scanf("%lf", coeff_b) != 1)
+    {
+        printf("\nPlease enter the correct numeric value.\nEnter b: ");
+        clear_buffer();
+    }
+    clear_buffer();
+
+    printf("Enter c: ");
+    while (scanf("%lf", coeff_c) != 1)
+    {
+        printf("\nPlease enter the correct numeric value.\nEnter c: ");
+        clear_buffer();
+    }
+    clear_buffer();
+}
+
+void output_equation(double * coeff_a, double * coeff_b, double * coeff_c)
+{
+    printf("\nThe equation you want to solve:\n");
+    printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
 }
