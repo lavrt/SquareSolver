@@ -21,6 +21,8 @@ bool program_continue(void);
 int clear_buffer(void);
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
+void solver_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
+void solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 
 int main(void)
 {
@@ -144,36 +146,49 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
         {
             count_of_roots = (double_equals(coeff_c, 0)) ? ANY_NUMBER : NO_SOLUTIONS;
         }
-
-        *solution_x1 = -(coeff_c / coeff_b);
-        *solution_x2 = -(coeff_c / coeff_b);
-        count_of_roots = ONE_SOLUTION;
+        else
+        {
+            solver_linear_equation(coeff_b, coeff_c, solution_x1, solution_x2);
+            count_of_roots = ONE_SOLUTION;
+        }
     }
-
-    double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
-
-    if (double_equals(discriminant, 0))
+    else
     {
-        *solution_x1 = -coeff_b / (2 * coeff_a);
-        *solution_x2 = -coeff_b / (2 * coeff_a);
-        count_of_roots = ONE_SOLUTION;
-    }
+        double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
 
-    if (discriminant > 0)
-    {
-        *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
-        *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
-        count_of_roots = TWO_SOLUTIONS;
-    }
+        if (double_equals(discriminant, 0))
+        {
+            solver_quadratic_equation(coeff_a, coeff_b, discriminant, solution_x1, solution_x2);
+            count_of_roots = ONE_SOLUTION;
+        }
 
-    if (discriminant < 0)
-    {
-        *solution_x1 = NAN;
-        *solution_x2 = NAN;
-        count_of_roots = NO_SOLUTIONS;
+        if (discriminant > 0)
+        {
+            solver_quadratic_equation(coeff_a, coeff_b, discriminant, solution_x1, solution_x2);
+            count_of_roots = TWO_SOLUTIONS;
+        }
+
+        if (discriminant < 0)
+        {
+            *solution_x1 = NAN;
+            *solution_x2 = NAN;
+            count_of_roots = NO_SOLUTIONS;
+        }
     }
 
     return count_of_roots;
+}
+
+void solver_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2)
+{
+    *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
+    *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
+}
+
+void solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
+{
+    *solution_x1 = -(coeff_c / coeff_b);
+    *solution_x2 = -(coeff_c / coeff_b);
 }
 
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
