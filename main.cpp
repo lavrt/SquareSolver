@@ -5,10 +5,13 @@
 
 const double epsilon = 1e-8;
 
-const int NO_SOLUTIONS = 0;    // enum
-const int ONE_SOLUTION = 1;
-const int TWO_SOLUTIONS = 2;
-const int ANY_NUMBER = 3;
+enum nRoots
+{
+    NO_SOLUTIONS = 0,
+    ONE_SOLUTION = 1,
+    TWO_SOLUTIONS = 2,
+    ANY_NUMBER = 3,
+};
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c);
 int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
@@ -133,17 +136,18 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
     assert (solution_x1 != NULL);
     assert (solution_x2 != NULL);
     assert (solution_x1 != solution_x2); */
-                                                    // разбить линейный и квадратичный случаи
+
+    enum nRoots count_of_roots;                     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     if (double_equals(coeff_a, 0))
     {
         if (double_equals(coeff_b, 0))
         {
-            return (double_equals(coeff_c, 0)) ? ANY_NUMBER : NO_SOLUTIONS;
+            count_of_roots = (double_equals(coeff_c, 0)) ? ANY_NUMBER : NO_SOLUTIONS;
         }
 
         *solution_x1 = -(coeff_c / coeff_b);
         *solution_x2 = -(coeff_c / coeff_b);
-        return ONE_SOLUTION;
+        count_of_roots = ONE_SOLUTION;
     }
 
     double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
@@ -152,24 +156,29 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
     {
         *solution_x1 = -coeff_b / (2 * coeff_a);
         *solution_x2 = -coeff_b / (2 * coeff_a);
-        return ONE_SOLUTION;
+        count_of_roots = ONE_SOLUTION;
     }
 
     if (discriminant > 0)
     {
         *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
         *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
-        return TWO_SOLUTIONS;
+        count_of_roots = TWO_SOLUTIONS;
     }
 
-    *solution_x1 = NAN;
-    *solution_x2 = NAN;
-    return NO_SOLUTIONS;
+    if (discriminant < 0)
+    {
+        *solution_x1 = NAN;
+        *solution_x2 = NAN;
+        count_of_roots = NO_SOLUTIONS;
+    }
+
+    return count_of_roots;
 }
 
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
 {
-    switch (program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2))      // вынести в переменную
+    switch (program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2))      // РІС‹РЅРµСЃС‚Рё РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
     {
         case NO_SOLUTIONS:
             printf("\nThe equation has no solutions.\n");
@@ -187,3 +196,5 @@ void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, dou
             printf("\nUnexpected error!\n");
     }
 }
+
+
