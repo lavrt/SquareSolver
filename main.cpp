@@ -11,7 +11,13 @@ enum nRoots
     ONE_SOLUTION = 1,
     TWO_SOLUTIONS = 2,
     ANY_NUMBER = 3,
-}; enum nRoots count_of_roots;
+}; 
+
+enum condition
+{
+    SUCCESS = 0,
+    FAILURE = 1,
+};
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c);
 int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
@@ -21,15 +27,17 @@ bool get_choice(void);
 int clear_buffer(void);
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
-void solver_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
-void solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
-void assign_nan(double * solution_x1, double * solution_x2);
+int solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
+int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, double solution_x1_expected, double solution_x2_expected, int count_of_roots_expected);
+void swap_if_decreasing(double * num1, double * num2);
+void all_tests(void);
 
 #include "solver.cpp"
 
 int main(void)
 {
+    all_tests();
     do
     {
         double coeff_a = 0;
@@ -43,8 +51,6 @@ int main(void)
         program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
 
         program_print_solutions(coeff_a, coeff_b, coeff_c, solution_x1, solution_x2);
-
-        // run_test(1, -1, 6, 7, 7, -1, 2);
 
         printf("\nWould you like to solve another equation? ");
     } while (get_choice());
@@ -93,8 +99,6 @@ bool get_choice(void)
 
     return ch == 'y';
 }
-
-
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 {
@@ -157,3 +161,5 @@ int clear_buffer(void)
     while (((ch = getchar()) != '\n') && ch != EOF) continue;
     return !(ch == '\n');
 }
+
+
