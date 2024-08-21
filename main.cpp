@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-//#include <assert.h>
+#include <assert.h>
 
 const double epsilon = 1e-8;
 
@@ -17,12 +17,16 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c);
 int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2);
 bool double_equals(double num1, double num2);
-bool program_continue(void);
+bool get_choice(void);
 int clear_buffer(void);
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 void solver_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2);
 void solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
+void assign_nan(double * solution_x1, double * solution_x2);
+int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, double solution_x1_expected, double solution_x2_expected, int count_of_roots_expected);
+
+#include "solver.cpp"
 
 int main(void)
 {
@@ -40,9 +44,10 @@ int main(void)
 
         program_print_solutions(coeff_a, coeff_b, coeff_c, solution_x1, solution_x2);
 
-        printf("\nWould you like to solve another equation? ");
+        // run_test(1, -1, 6, 7, 7, -1, 2);
 
-    } while (program_continue());
+        printf("\nWould you like to solve another equation? ");
+    } while (get_choice());
 
     return 0;
 }
@@ -59,7 +64,7 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
         print_equation(coeff_a, coeff_b, coeff_c);
 
         printf("\nAre the coefficients correct? ");
-        if (program_continue())            //get choice
+        if (get_choice())            
         {
             printf("The coefficients are saved.\n");
             break;
@@ -73,7 +78,7 @@ bool double_equals(double num1, double num2)
     return fabs(num1 - num2) < epsilon;
 }
 
-bool program_continue(void)
+bool get_choice(void)
 {
     printf("Enter 'y' if you want to continue, otherwise enter 'n': ");
 
@@ -89,12 +94,7 @@ bool program_continue(void)
     return ch == 'y';
 }
 
-int clear_buffer(void)
-{
-    int ch = 0;
-    while (((ch = getchar()) != '\n') && ch != EOF) continue;
-    return !(ch == '\n');
-}
+
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 {
@@ -129,71 +129,10 @@ void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
     printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
 }
 
-int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
-{
-/*  assert (std::isfinite (coeff_a));
-    assert (std::isfinite (coeff_b));
-    assert (std::isfinite (coeff_c));
-
-    assert (solution_x1 != NULL);
-    assert (solution_x2 != NULL);
-    assert (solution_x1 != solution_x2); */
-
-                         // ������� �������� � ������������ ������
-    if (double_equals(coeff_a, 0))
-    {
-        if (double_equals(coeff_b, 0))
-        {
-            count_of_roots = (double_equals(coeff_c, 0)) ? ANY_NUMBER : NO_SOLUTIONS;
-        }
-        else
-        {
-            solver_linear_equation(coeff_b, coeff_c, solution_x1, solution_x2);
-            count_of_roots = ONE_SOLUTION;
-        }
-    }
-    else
-    {
-        double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
-
-        if (double_equals(discriminant, 0))
-        {
-            solver_quadratic_equation(coeff_a, coeff_b, discriminant, solution_x1, solution_x2);
-            count_of_roots = ONE_SOLUTION;
-        }
-
-        if (discriminant > 0)
-        {
-            solver_quadratic_equation(coeff_a, coeff_b, discriminant, solution_x1, solution_x2);
-            count_of_roots = TWO_SOLUTIONS;
-        }
-
-        if (discriminant < 0)
-        {
-            *solution_x1 = NAN;
-            *solution_x2 = NAN;
-            count_of_roots = NO_SOLUTIONS;
-        }
-    }
-
-    return count_of_roots;
-}
-
-void solver_quadratic_equation(double coeff_a, double coeff_b, double discriminant, double * solution_x1, double * solution_x2)
-{
-    *solution_x1 = (-coeff_b - sqrt(discriminant)) / (2 * coeff_a);
-    *solution_x2 = (-coeff_b + sqrt(discriminant)) / (2 * coeff_a);
-}
-
-void solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
-{
-    *solution_x1 = -(coeff_c / coeff_b);
-    *solution_x2 = -(coeff_c / coeff_b);
-}
-
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
 {
-    switch (program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2))      // вынести в переменную
+    int count_of_roots = program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
+    switch (count_of_roots) 
     {
         case NO_SOLUTIONS:
             printf("\nThe equation has no solutions.\n");
@@ -212,4 +151,9 @@ void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, dou
     }
 }
 
-
+int clear_buffer(void)
+{
+    int ch = 0;
+    while (((ch = getchar()) != '\n') && ch != EOF) continue;
+    return !(ch == '\n');
+}
