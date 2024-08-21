@@ -11,7 +11,7 @@ enum nRoots
     ONE_SOLUTION = 1,
     TWO_SOLUTIONS = 2,
     ANY_NUMBER = 3,
-};
+}; enum nRoots count_of_roots;
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c);
 int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
@@ -139,7 +139,7 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
     assert (solution_x2 != NULL);
     assert (solution_x1 != solution_x2); */
 
-    enum nRoots count_of_roots;                     // ������� �������� � ������������ ������
+                         // ������� �������� � ������������ ������
     if (double_equals(coeff_a, 0))
     {
         if (double_equals(coeff_b, 0))
