@@ -174,19 +174,22 @@ int clear_buffer(void)
     return !(ch == '\n');
 }
 
-void program_testing(void) // int
-{  // add table
-    struct test_data test1 = {1, 0,  0, 0, NAN, NAN, ANY_NUMBER}; // add assert
-    struct test_data test2 = {2, 0,  0, 1, NAN, NAN, NO_SOLUTIONS};
-    struct test_data test3 = {3, 0,  2, 6,  -3,  -3, ONE_SOLUTION};
-    struct test_data test4 = {4, 1, -2, 1,   1,   1, ONE_SOLUTION};
-    struct test_data test5 = {5, 2, -7, 5,   1, 2.5, TWO_SOLUTIONS};
-    struct test_data test6 = {6, 1,  1, 1, NAN, NAN, NO_SOLUTIONS}; // add test with coeff float point
-
-    run_test(&test1);
-    run_test(&test2);
-    run_test(&test3);
-    run_test(&test4);
-    run_test(&test5);
-    run_test(&test6);
+void program_testing(void) // void to int
+{  
+    struct test_data array_of_tests[] =
+    { //  num_of_test  coeff_a  coeff_b  coeff_c  solution_x1  solution_x2  count_of_different_roots 
+        {      1,         0,       0,       0,        NAN,         NAN,            ANY_NUMBER        }, // add assert
+        {      2,         0,       0,       9,        NAN,         NAN,          NO_SOLUTIONS        }, // add test with coeff float point
+        {      3,         0,       2,       6,         -3,          -3,          ONE_SOLUTION        },
+        {      4,         1,      -2,       1,          1,           1,          ONE_SOLUTION        },
+        {      5,         2,      -7,       5,          1,         2.5,         TWO_SOLUTIONS        },
+        {      6,         1,       1,       1,        NAN,         NAN,          NO_SOLUTIONS        },
+    };
+    
+    int count_of_tests = sizeof(array_of_tests) / sizeof(array_of_tests[0]);
+    
+    for (int index = 0; index < count_of_tests; ++index)
+    {
+        run_test(&array_of_tests[index]);
+    }   
 }
