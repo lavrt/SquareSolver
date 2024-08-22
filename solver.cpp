@@ -1,4 +1,4 @@
-int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
+enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
     assert (isfinite(coeff_a)); // накидать ассерты в другие места add assert in other places
     assert (isfinite(coeff_b));
@@ -18,7 +18,7 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
     }
 }
 
-int solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
+enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {                                                                         
     double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
 
@@ -42,7 +42,7 @@ int solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, do
     }
 }
 
-int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
+enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
     if (double_equals(coeff_b, 0))
     {
@@ -67,33 +67,32 @@ int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1,
     }
 }
 
-int run_test(struct test_data * data)
-{
+enum condition run_test(struct test_data * data)
+{    
     double solution_x1 = 0;
     double solution_x2 = 0;
 
     int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c, &solution_x1, &solution_x2);
 
-    if (data -> solution_x1_expected > data -> solution_x2_expected) 
+    if (isnan(solution_x1) || isnan(solution_x2) || isnan(data -> solution_x1_expected) || isnan(data -> solution_x2_expected))
+    {
+        assert(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected));
+        assert(isnan(solution_x1) && isnan(solution_x2));
+    }
+
+    if (!(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
     {
         swap(&(data -> solution_x1_expected), &(data -> solution_x2_expected));    
     }
 
-    if (solution_x1 > solution_x2)
+    if (!(isnan(solution_x1) && isnan(solution_x2)) && (solution_x1 > solution_x2))
     {
         swap(&solution_x1, &solution_x2);
-    }   
-
-    if (!double_equals(count_of_roots, data -> count_of_different_roots_expected) // fix logic
-        || !((solution_x1 == NAN) && (data -> solution_x1_expected == NAN))
-        || !((solution_x2 == NAN) && (data -> solution_x2_expected == NAN)))
-    {
-        return FAILURE;
-    }
-
-    if (!double_equals(count_of_roots, data -> count_of_different_roots_expected)
-        || !double_equals(solution_x1, data -> solution_x1_expected)
-        || !double_equals(solution_x2, data -> solution_x2_expected))
+    } 
+        
+    if (!double_equals_with_support_nan(count_of_roots, data -> count_of_different_roots_expected)
+     || !double_equals_with_support_nan(solution_x1, data -> solution_x1_expected)
+     || !double_equals_with_support_nan(solution_x2, data -> solution_x2_expected))
     {
         printf("\n#         Error test %d.\n"
                "          a = %lf, b = %lf, c = %lf.\n"
@@ -113,4 +112,12 @@ void swap(double * num1, double * num2)
     double temp = *num2;
     *num2 = *num1;
     *num1 = temp;
+}
+
+bool double_equals_with_support_nan(double num1, double num2)
+{ 
+    if (isnan(num1) && isnan(num2))
+        return true;
+    else
+        return fabs(num1 - num2) < epsilon;
 }
