@@ -30,8 +30,8 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 int solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, double solution_x1_expected, double solution_x2_expected, int count_of_roots_expected);
-void swap_if_decreasing(double * num1, double * num2);
 void all_tests(void);
+void swap(double * num1, double * num2);
 
 #include "solver.cpp"
 
@@ -62,8 +62,7 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 {
     do
     {
-        printf("To get started, enter the values of the "
-                "coefficients of the quadratic equation.\n\n");
+        printf("To get started, enter the values of the coefficients of the quadratic equation.\n\n");
 
         take_values(coeff_a, coeff_b, coeff_c);
 
@@ -161,5 +160,3 @@ int clear_buffer(void)
     while (((ch = getchar()) != '\n') && ch != EOF) continue;
     return !(ch == '\n');
 }
-
-

@@ -2,7 +2,7 @@ int program_solve_equation(double coeff_a, double coeff_b, double coeff_c, doubl
 {
     assert (isfinite(coeff_a)); // накидать ассерты в другие места
     assert (isfinite(coeff_b));
-    assert (isfinite(coeff_c));                                                                                          // можно ли закинуть эти ассерты в функцию?????
+    assert (isfinite(coeff_c));                                                                                          
 
     assert (solution_x1 != NULL);
     assert (solution_x2 != NULL);
@@ -74,8 +74,15 @@ int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, do
 
     int count_of_roots = program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
 
-    swap_if_decreasing(&solution_x1_expected, &solution_x2_expected); //
-    swap_if_decreasing(&solution_x1, &solution_x2);   
+    if (solution_x1_expected > solution_x2_expected) 
+    {
+        swap(&solution_x1_expected, &solution_x2_expected);    
+    }
+
+    if (solution_x1 > solution_x2)
+    {
+        swap(&solution_x1, &solution_x2);
+    }   
 
     if (!double_equals(count_of_roots, count_of_different_roots_expected)
         || !((solution_x1 == NAN) && (solution_x1_expected == NAN))
@@ -102,21 +109,18 @@ int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, do
 }
 
 void all_tests(void)
-{
-    run_test(1, 0, 0, 0, NAN, NAN, ANY_NUMBER);        // сделать таблицу
-    run_test(2, 0, 0, 999, NAN, NAN, NO_SOLUTIONS);
-    run_test(3, 0, 2, 6, -3, -3, ONE_SOLUTION);
-    run_test(4, 1, -2, 1, 1, 1, ONE_SOLUTION);
-    run_test(5, 2, -7, 5, 1, 2.5, TWO_SOLUTIONS);
-    run_test(6, 1, 1, 1, NAN, NAN, NO_SOLUTIONS);
+{   //        num_of_test  coeff_a  coeff_b  coeff_c  solution_x1  solution_x2  count_of_different_roots 
+    run_test(      1,         0,       0,       0,        NAN,         NAN,            ANY_NUMBER        );       
+    run_test(      2,         0,       0,       9,        NAN,         NAN,          NO_SOLUTIONS        );
+    run_test(      3,         0,       2,       6,         -3,          -3,          ONE_SOLUTION        );
+    run_test(      4,         1,      -2,       1,          1,           1,          ONE_SOLUTION        );
+    run_test(      5,         2,      -7,       5,          1,         2.5,         TWO_SOLUTIONS        );
+    run_test(      6,         1,       1,       1,        NAN,         NAN,          NO_SOLUTIONS        );
 }
 
-void swap_if_decreasing(double * num1, double * num2) // добавить чисто swap
+void swap(double * num1, double * num2)
 {
-    if (*num1 > *num2)
-    {
-        double temp = *num2;
-        *num2 = *num1;
-        *num1 = temp;
-    }
+    double temp = *num2;
+    *num2 = *num1;
+    *num1 = temp;
 }
