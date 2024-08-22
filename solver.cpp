@@ -67,16 +67,16 @@ int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1,
     }
 }
 
-int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, double solution_x1_expected, double solution_x2_expected, int count_of_different_roots_expected)
+int run_test(struct test_data data)
 {
     double solution_x1 = 0;
     double solution_x2 = 0;
 
-    int count_of_roots = program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
+    int count_of_roots = program_solve_equation(data.coeff_a, data.coeff_b, data.coeff_c, &solution_x1, &solution_x2);
 
-    if (solution_x1_expected > solution_x2_expected) 
+    if (data.solution_x1_expected > data.solution_x2_expected) 
     {
-        swap(&solution_x1_expected, &solution_x2_expected);    
+        swap(&(data.solution_x1_expected), &(data.solution_x2_expected));    
     }
 
     if (solution_x1 > solution_x2)
@@ -84,38 +84,28 @@ int run_test(int num_of_test, double coeff_a, double coeff_b, double coeff_c, do
         swap(&solution_x1, &solution_x2);
     }   
 
-    if (!double_equals(count_of_roots, count_of_different_roots_expected)
-        || !((solution_x1 == NAN) && (solution_x1_expected == NAN))
-        || !((solution_x2 == NAN) && (solution_x2_expected == NAN)))
+    if (!double_equals(count_of_roots, data.count_of_different_roots_expected) // fix logic
+        || !((solution_x1 == NAN) && (data.solution_x1_expected == NAN))
+        || !((solution_x2 == NAN) && (data.solution_x2_expected == NAN)))
     {
         return FAILURE;
     }
 
-    if (!double_equals(count_of_roots, count_of_different_roots_expected)
-        || !double_equals(solution_x1, solution_x1_expected)
-        || !double_equals(solution_x2, solution_x2_expected))
+    if (!double_equals(count_of_roots, data.count_of_different_roots_expected)
+        || !double_equals(solution_x1, data.solution_x1_expected)
+        || !double_equals(solution_x2, data.solution_x2_expected))
     {
         printf("\n#         Error test %d.\n"
                "          a = %lf, b = %lf, c = %lf.\n"
                "          x1 = %lf, x2 = %lf, count_of_roots = %d.\n"
                "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n",
-               num_of_test,
-               coeff_a, coeff_b, coeff_c,
+               data.num_of_test,
+               data.coeff_a, data.coeff_b, data.coeff_c,
                solution_x1, solution_x2, count_of_roots,
-               solution_x1_expected, solution_x2_expected, count_of_different_roots_expected);
+               data.solution_x1_expected, data.solution_x2_expected, data.count_of_different_roots_expected);
         return FAILURE;
     }
     return SUCCESS;
-}
-
-void all_tests(void)
-{   //        num_of_test  coeff_a  coeff_b  coeff_c  solution_x1  solution_x2  count_of_different_roots 
-    run_test(      1,         0,       0,       0,        NAN,         NAN,            ANY_NUMBER        );       
-    run_test(      2,         0,       0,       9,        NAN,         NAN,          NO_SOLUTIONS        );
-    run_test(      3,         0,       2,       6,         -3,          -3,          ONE_SOLUTION        );
-    run_test(      4,         1,      -2,       1,          1,           1,          ONE_SOLUTION        );
-    run_test(      5,         2,      -7,       5,          1,         2.5,         TWO_SOLUTIONS        );
-    run_test(      6,         1,       1,       1,        NAN,         NAN,          NO_SOLUTIONS        );
 }
 
 void swap(double * num1, double * num2)
