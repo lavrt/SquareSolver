@@ -40,8 +40,8 @@ void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 int solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 int solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
-void all_tests(void);
 void swap(double * num1, double * num2);
+int run_test(struct test_data * data);
 
 #include "solver.cpp"
 
@@ -54,12 +54,12 @@ int main(void)
     struct test_data test5 = {5, 2, -7, 5, 1, 2.5, TWO_SOLUTIONS};
     struct test_data test6 = {6, 1, 1, 1, NAN, NAN, NO_SOLUTIONS}; // add test with coeff float point
 
-    run_test(test1);
-    run_test(test2);
-    run_test(test3);
-    run_test(test4);
-    run_test(test5);
-    run_test(test6);
+    run_test(&test1);
+    run_test(&test2);
+    run_test(&test3);
+    run_test(&test4);
+    run_test(&test5);
+    run_test(&test6);
 
     do
     {
