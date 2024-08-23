@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+#include <assert.h>
+#include "solver.h"
+
 /*!
 \file
 */
@@ -79,48 +85,6 @@ enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solu
     }
 }
 
-enum condition run_test(struct testData * data)
-{    
-    assert (data != NULL);
-    
-    double solution_x1 = 0;
-    double solution_x2 = 0;
-
-    int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c, &solution_x1, &solution_x2);
-
-    if (isnan(solution_x1) || isnan(solution_x2) || isnan(data -> solution_x1_expected) || isnan(data -> solution_x2_expected))
-    {
-        assert(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected));
-        assert(isnan(solution_x1) && isnan(solution_x2));
-    }
-
-    if (!(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
-    {
-        swap(&(data -> solution_x1_expected), &(data -> solution_x2_expected));    
-    }
-
-    if (!(isnan(solution_x1) && isnan(solution_x2)) && (solution_x1 > solution_x2))
-    {
-        swap(&solution_x1, &solution_x2);
-    } 
-        
-    if (!double_equals_with_support_nan(count_of_roots, data -> count_of_different_roots_expected)
-     || !double_equals_with_support_nan(solution_x1, data -> solution_x1_expected)
-     || !double_equals_with_support_nan(solution_x2, data -> solution_x2_expected))
-    {
-        printf("\n#         Error test %d.\n"
-               "          a = %lf, b = %lf, c = %lf.\n"
-               "          x1 = %lf, x2 = %lf, count_of_roots = %d.\n"
-               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n",
-               data -> num_of_test,
-               data -> coeff_a, data -> coeff_b, data -> coeff_c,
-               solution_x1, solution_x2, count_of_roots,
-               data -> solution_x1_expected, data -> solution_x2_expected, data -> count_of_different_roots_expected);
-        return FAILURE;
-    }
-    return SUCCESS;
-}
-
 void swap(double * num1, double * num2)
 {
     assert (num1 != NULL);
@@ -132,10 +96,7 @@ void swap(double * num1, double * num2)
                           *num1 = temp;
 }
 
-bool double_equals_with_support_nan(double num1, double num2)
-{ 
-    if (isnan(num1) && isnan(num2))
-        return true;
-    else
-        return fabs(num1 - num2) < epsilon;
+bool double_equals(double num1, double num2)
+{
+    return fabs(num1 - num2) < epsilon;
 }
