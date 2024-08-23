@@ -2,16 +2,6 @@
 \file
 */
 
-//-----------------------------------------------------------
-/**
-*Решает уравнение степени не более 2.
-*\param[in] coeff_a Коэффициент a
-*\param[in] coeff_b Коэффициент b
-*\param[in] coeff_c Коэффициент c
-*\param[in] solution_x1 Указатель на первый корень уравнения
-*\param[in] solution_x2 Указатель на второй корень уравнения
-*/
-//-----------------------------------------------------------
 enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
     assert (isfinite(coeff_a)); // накидать ассерты в другие места add assert in other places
@@ -32,14 +22,6 @@ enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_
     }
 }
 
-/**
-*Решает квадратное уравнение. Изменяет переменные, содержащие корни уравнения, по указателю.
-*\param[in] coeff_a Коэффициент a
-*\param[in] coeff_b Коэффициент b
-*\param[in] coeff_c Коэффициент c
-*\param[in] solution_x1 Указатель на первый корень уравнения
-*\param[in] solution_x2 Указатель на второй корень уравнения
-*/
 enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {                                                                         
     assert (solution_x1 != NULL);
@@ -68,13 +50,6 @@ enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coe
     }
 }
 
-/**
-*Решает линейное уравнение. Изменяет переменные, содержащие корни уравнения, по указателю.
-*\param[in] coeff_b Коэффициент b
-*\param[in] coeff_c Коэффициент c
-*\param[in] solution_x1 Указатель на первый корень уравнения
-*\param[in] solution_x2 Указатель на второй корень уравнения
-*/
 enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
     assert (solution_x1 != NULL);
@@ -104,12 +79,9 @@ enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solu
     }
 }
 
-/**
-*Запускает тест квадратного уравнения.
-*/
 enum condition run_test(struct testData * data)
 {    
-    assert (testData != NULL)
+    assert (data != NULL);
     
     double solution_x1 = 0;
     double solution_x2 = 0;
@@ -149,12 +121,6 @@ enum condition run_test(struct testData * data)
     return SUCCESS;
 }
 
-/**
-*Меняет значения двух параметров местами.
-*Передаются указатели на параметры.
-*\param[in] num1 Первый параметр
-*\param[in] num2 Второй параметр
-*/
 void swap(double * num1, double * num2)
 {
     assert (num1 != NULL);
@@ -166,12 +132,6 @@ void swap(double * num1, double * num2)
                           *num1 = temp;
 }
 
-/**
-*С заданной точностью пределяет, равны ли два параметра типа double друг другу.
-*Способна определить, являются ли оба параметра NaN.
-*\param[in] num1 Первый параметр
-*\param[in] num2 Второй параметр
-*/
 bool double_equals_with_support_nan(double num1, double num2)
 { 
     if (isnan(num1) && isnan(num2))
