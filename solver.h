@@ -1,3 +1,6 @@
+#ifndef SOLVER_H
+#define SOLVER_H
+
 const double epsilon = 1e-8;
 
 enum nRoots
@@ -74,3 +77,5 @@ bool double_equals(double num1, double num2);
 *\param[in] num2 Второй параметр
 */
 bool double_equals(double num1, double num2);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef TESTER_H
+#define TESTER_H
+
 struct testData
 {
     int num_of_test;
@@ -38,3 +41,5 @@ enum condition run_test(struct testData * data);
 */
 //-----------------------------------------------------------
 bool double_equals_with_support_nan(double num1, double num2);
+
+#endif
