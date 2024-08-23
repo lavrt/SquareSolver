@@ -1,13 +1,11 @@
+#include "tester.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include <assert.h>
-#include "tester.h"
-#include "solver.h"
 
-/*!
-\file
-*/
+#include "solver.h"
+#include "supportive.h"
 
 void program_testing(void) // void to int
 {  
@@ -31,25 +29,25 @@ void program_testing(void) // void to int
 
 enum condition run_test(struct testData * data)
 {    
-    assert (data != NULL);
+    my_assert (data != NULL);
     
     double solution_x1 = 0;
     double solution_x2 = 0;
 
     int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c, &solution_x1, &solution_x2);
 
-    if (isnan(solution_x1) || isnan(solution_x2) || isnan(data -> solution_x1_expected) || isnan(data -> solution_x2_expected))
+    if (my_isnan(solution_x1) || my_isnan(solution_x2) || my_isnan(data -> solution_x1_expected) || my_isnan(data -> solution_x2_expected))
     {
-        assert(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected));
-        assert(isnan(solution_x1) && isnan(solution_x2));
+        my_assert(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected));
+        my_assert(my_isnan(solution_x1) && my_isnan(solution_x2));
     }
 
-    if (!(isnan(data -> solution_x1_expected) && isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
+    if (!(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
     {
         swap(&(data -> solution_x1_expected), &(data -> solution_x2_expected));    
     }
 
-    if (!(isnan(solution_x1) && isnan(solution_x2)) && (solution_x1 > solution_x2))
+    if (!(my_isnan(solution_x1) && my_isnan(solution_x2)) && (solution_x1 > solution_x2))
     {
         swap(&solution_x1, &solution_x2);
     } 
@@ -73,7 +71,7 @@ enum condition run_test(struct testData * data)
 
 bool double_equals_with_support_nan(double num1, double num2)
 { 
-    if (isnan(num1) && isnan(num2))
+    if (my_isnan(num1) && my_isnan(num2))
         return true;
     else
         return double_equals(num1, num2);

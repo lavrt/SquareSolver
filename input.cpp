@@ -1,21 +1,19 @@
+#include "input.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include <assert.h>
-#include "input.h"
 
-/*!
-\file
-*/
+#include "supportive.h"
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    assert (coeff_a != NULL);
-    assert (coeff_b != NULL);
-    assert (coeff_c != NULL);
-    assert (coeff_a != coeff_b);
-    assert (coeff_b != coeff_c);
-    assert (coeff_a != coeff_c);
+    my_assert (coeff_a != NULL);
+    my_assert (coeff_b != NULL);
+    my_assert (coeff_c != NULL);
+    my_assert (coeff_a != coeff_b);
+    my_assert (coeff_b != coeff_c);
+    my_assert (coeff_a != coeff_c);
     
     do
     {
@@ -37,12 +35,12 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    assert (coeff_a != NULL);
-    assert (coeff_b != NULL);
-    assert (coeff_c != NULL);
-    assert (coeff_a != coeff_b);
-    assert (coeff_b != coeff_c);
-    assert (coeff_a != coeff_c);
+    my_assert (coeff_a != NULL);
+    my_assert (coeff_b != NULL);
+    my_assert (coeff_c != NULL);
+    my_assert (coeff_a != coeff_b);
+    my_assert (coeff_b != coeff_c);
+    my_assert (coeff_a != coeff_c);
     
     printf("Enter a: ");
     while (scanf("%lf", coeff_a) != 1)
@@ -71,12 +69,12 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    assert (coeff_a != NULL);
-    assert (coeff_b != NULL);
-    assert (coeff_c != NULL);
-    assert (coeff_a != coeff_b);
-    assert (coeff_b != coeff_c);
-    assert (coeff_a != coeff_c);
+    my_assert (coeff_a != NULL);
+    my_assert (coeff_b != NULL);
+    my_assert (coeff_c != NULL);
+    my_assert (coeff_a != coeff_b);
+    my_assert (coeff_b != coeff_c);
+    my_assert (coeff_a != coeff_c);
     
     printf("\nThe equation you want to solve:\n");
     printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);

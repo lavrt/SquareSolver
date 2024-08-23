@@ -1,22 +1,20 @@
+#include "solver.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include <assert.h>
-#include "solver.h"
 
-/*!
-\file
-*/
+#include "supportive.h"
 
 enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
-    assert (isfinite(coeff_a)); // накидать ассерты в другие места add assert in other places
-    assert (isfinite(coeff_b));
-    assert (isfinite(coeff_c));                                                                                          
+    my_assert (my_isfinite(coeff_a)); // накидать ассерты в другие места add my_assert in other places
+    my_assert (my_isfinite(coeff_b));
+    my_assert (my_isfinite(coeff_c));                                                                                          
 
-    assert (solution_x1 != NULL);
-    assert (solution_x2 != NULL);
-    assert (solution_x1 != solution_x2); 
+    my_assert (solution_x1 != NULL);
+    my_assert (solution_x2 != NULL);
+    my_assert (solution_x1 != solution_x2); 
 
     if (double_equals(coeff_a, 0))
     {
@@ -30,9 +28,9 @@ enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_
 
 enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {                                                                         
-    assert (solution_x1 != NULL);
-    assert (solution_x2 != NULL);
-    assert (solution_x1 != solution_x2); 
+    my_assert (solution_x1 != NULL);
+    my_assert (solution_x2 != NULL);
+    my_assert (solution_x1 != solution_x2); 
     
     double discriminant = coeff_b * coeff_b - 4 * coeff_a * coeff_c;
 
@@ -58,9 +56,9 @@ enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coe
 
 enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2)
 {
-    assert (solution_x1 != NULL);
-    assert (solution_x2 != NULL);
-    assert (solution_x1 != solution_x2); 
+    my_assert (solution_x1 != NULL);
+    my_assert (solution_x2 != NULL);
+    my_assert (solution_x1 != solution_x2); 
     
     if (double_equals(coeff_b, 0))
     {
@@ -87,9 +85,9 @@ enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solu
 
 void swap(double * num1, double * num2)
 {
-    assert (num1 != NULL);
-    assert (num2 != NULL);
-    assert (num1 != num2);
+    my_assert (num1 != NULL);
+    my_assert (num2 != NULL);
+    my_assert (num1 != num2);
     
     double temp = *num2;
                   *num2 = *num1;

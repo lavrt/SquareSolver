@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include <assert.h>
-#include "tester.h"
-#include "input.h"
-#include "output.h"
-#include "solver.h"
 
-/*!
-\file
-*/
+#include "tester.h"
+#include "input.h"      //shell script
+#include "solver.h"     //assert написать
+#include "output.h"
 
 int main(void)
 {

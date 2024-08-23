@@ -1,6 +1,10 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+/*!
+\file
+*/
+
 /**
 *Запрашивает у пользователя ввод коэффициентов.
 *Повторяет ввод в цикле, если пользователь желает решить еще одно квадратное уравнение.
@@ -36,4 +40,4 @@ int clear_buffer(void);
 */
 bool get_choice(void);
 
-#endif
+#endif // INPUT_H

@@ -1,6 +1,10 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
+/*!
+\file
+*/
+
 /**
 *Выводит решения квадратного уравнения.
 *\param[in] coeff_a Коэффициент a
@@ -11,4 +15,4 @@
 */
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2);
 
-#endif
+#endif // OUTPUT_H

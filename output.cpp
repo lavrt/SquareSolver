@@ -1,13 +1,10 @@
+#include "output.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include <assert.h>
-#include "output.h"
-#include "solver.h"
 
-/*!
-\file
-*/
+#include "solver.h"
 
 void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
 {

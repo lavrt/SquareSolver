@@ -1,6 +1,10 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
+/*!
+\file
+*/
+
 const double epsilon = 1e-8;
 
 enum nRoots
@@ -78,4 +82,4 @@ bool double_equals(double num1, double num2);
 */
 bool double_equals(double num1, double num2);
 
-#endif
+#endif // SOLVER_H
