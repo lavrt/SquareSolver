@@ -8,7 +8,7 @@
 #include "supportive.h"
 #include "formatting.h"
 
-void program_testing(void) // void to int
+int program_testing(enum PrintTests flag) // void to int
 {  
     struct testData array_of_tests[] =
     { //  num_of_test  coeff_a  coeff_b  coeff_c  solution_x1  solution_x2  count_of_different_roots 
@@ -22,10 +22,25 @@ void program_testing(void) // void to int
     
     int count_of_tests = SIZE_OF_ARRAY(array_of_tests);
     
+    int number_of_failed_tests = 0;
+
     for (int index = 0; index < count_of_tests; ++index)
     {
-        run_test(&array_of_tests[index]);
-    }   
+        if (flag == PRINT_ON)
+        {
+            if ((run_test(&array_of_tests[index]) == SUCCESS))
+            {
+                printf( COLOR_GREEN FORMAT_BOLD "Test %d passed successfully" COLOR_BLACK FORMAT_OFF "\n", index + 1);
+            }
+            else
+            {
+                ++number_of_failed_tests;
+                printf( COLOR_RED FORMAT_BOLD "Test %d failed" COLOR_BLACK FORMAT_BOLD "\n", index + 1);
+            }
+        }
+    }
+
+    return number_of_failed_tests;
 }
 
 enum condition run_test(struct testData * data)
@@ -38,13 +53,14 @@ enum condition run_test(struct testData * data)
     int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c,
                                                 &solution_x1, &solution_x2);
 
-    if (my_isnan(solution_x1) 
-        || my_isnan(solution_x2)
-        || my_isnan(data -> solution_x1_expected) 
-        || my_isnan(data -> solution_x2_expected))
+    if (my_isnan(data -> solution_x1_expected) || my_isnan(data -> solution_x2_expected))
     {
         ASSERT(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected),
               "Either both solutions are finite or both numbers are NaN");
+    }
+
+    if (my_isnan(solution_x1) || my_isnan(solution_x2))
+    {
         ASSERT(my_isnan(solution_x1) && my_isnan(solution_x2),
               "Either both solutions are finite or both numbers are NaN");
     }
@@ -68,12 +84,12 @@ enum condition run_test(struct testData * data)
         printf( COLOR_RED FORMAT_BOLD "\n#         Error test %d.\n"
                "          a = %lf, b = %lf, c = %lf.\n"
                "          x1 = %lf, x2 = %lf, count_of_roots = %d.\n"
-               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n" COLOR_BLACK FORMAT_OFF ,
+               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n\n" COLOR_BLACK FORMAT_OFF ,
                data -> num_of_test,
                data -> coeff_a, data -> coeff_b, data -> coeff_c,
                solution_x1, solution_x2, count_of_roots,
                data -> solution_x1_expected, data -> solution_x2_expected, data -> count_of_different_roots_expected);
-        return FAILURE;
+        return FAILURE; 
     }
     return SUCCESS;
 }

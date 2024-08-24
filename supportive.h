@@ -3,7 +3,8 @@
 
 #include "tester.h"
 
-#define ASSERT(statement, error_message) my_assert(statement, error_message, __FILE__, __LINE__, __func__);
+#define ASSERT(statement, error_message) \
+    do { my_assert(statement, error_message, __FILE__, __LINE__, __func__); } while (0)
 #define SIZE_OF_ARRAY(array) (sizeof(array) / sizeof(array[0]))
 
 /*!

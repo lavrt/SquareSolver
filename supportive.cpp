@@ -29,7 +29,7 @@ bool my_isfinite(double num)
 void swap(double * num1, double * num2)
 {
     ASSERT (num1 != NULL, "The pointer to first number is NULL.");
-    ASSERT (num2 != NULL, "The pointer to second number x1 is NULL.");
+    ASSERT (num2 != NULL, "The pointer to second number is NULL.");
     
     if (num1 == num2) { return; }
     
