@@ -2,7 +2,7 @@
 #define FORMATTING_H
 
 /*!
-\file
+\file 
 */
 
 #define COLOR_BLACK        "\e[30m"

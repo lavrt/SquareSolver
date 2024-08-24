@@ -6,6 +6,7 @@
 
 #include "solver.h"
 #include "supportive.h"
+#include "formatting.h"
 
 void program_testing(void) // void to int
 {  
@@ -19,7 +20,7 @@ void program_testing(void) // void to int
         {      6,         1,       1,       1,        NAN,         NAN,          NO_SOLUTIONS        },
     };
     
-    int count_of_tests = sizeof(array_of_tests) / sizeof(array_of_tests[0]);
+    int count_of_tests = SIZE_OF_ARRAY(array_of_tests);
     
     for (int index = 0; index < count_of_tests; ++index)
     {
@@ -29,20 +30,28 @@ void program_testing(void) // void to int
 
 enum condition run_test(struct testData * data)
 {    
-    my_assert(data != NULL, "The pointer to the struct testData is NULL.", __FILE__, __LINE__, __func__);
-    
+    ASSERT(data != NULL, "The pointer to the struct testData is NULL.");
+     
     double solution_x1 = 0;
     double solution_x2 = 0;
 
-    int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c, &solution_x1, &solution_x2);
+    int count_of_roots = program_solve_equation(data -> coeff_a, data -> coeff_b, data -> coeff_c,
+                                                &solution_x1, &solution_x2);
 
-    if (my_isnan(solution_x1) || my_isnan(solution_x2) || my_isnan(data -> solution_x1_expected) || my_isnan(data -> solution_x2_expected))
+    if (my_isnan(solution_x1) 
+        || my_isnan(solution_x2)
+        || my_isnan(data -> solution_x1_expected) 
+        || my_isnan(data -> solution_x2_expected))
     {
-        my_assert(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected), "Either both solutions are finite or both numbers are NaN", __FILE__, __LINE__, __func__);
-        my_assert(my_isnan(solution_x1) && my_isnan(solution_x2), "Either both solutions are finite or both numbers are NaN", __FILE__, __LINE__, __func__);
+        ASSERT(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected),
+              "Either both solutions are finite or both numbers are NaN");
+        ASSERT(my_isnan(solution_x1) && my_isnan(solution_x2),
+              "Either both solutions are finite or both numbers are NaN");
     }
 
-    if (!(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
+    if (!(my_isnan(data -> solution_x1_expected)
+        && my_isnan(data -> solution_x2_expected))
+        && (data -> solution_x1_expected > data -> solution_x2_expected)) 
     {
         swap(&(data -> solution_x1_expected), &(data -> solution_x2_expected));    
     }
@@ -53,13 +62,13 @@ enum condition run_test(struct testData * data)
     } 
         
     if (!double_equals_with_support_nan(count_of_roots, data -> count_of_different_roots_expected)
-     || !double_equals_with_support_nan(solution_x1, data -> solution_x1_expected)
-     || !double_equals_with_support_nan(solution_x2, data -> solution_x2_expected))
+        || !double_equals_with_support_nan(solution_x1, data -> solution_x1_expected)
+        || !double_equals_with_support_nan(solution_x2, data -> solution_x2_expected))
     {
-        printf("\n#         Error test %d.\n"
+        printf( COLOR_RED FORMAT_BOLD "\n#         Error test %d.\n"
                "          a = %lf, b = %lf, c = %lf.\n"
                "          x1 = %lf, x2 = %lf, count_of_roots = %d.\n"
-               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n",
+               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n" COLOR_BLACK FORMAT_OFF ,
                data -> num_of_test,
                data -> coeff_a, data -> coeff_b, data -> coeff_c,
                solution_x1, solution_x2, count_of_roots,

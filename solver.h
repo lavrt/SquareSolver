@@ -5,7 +5,7 @@
 \file
 */
 
-const double epsilon = 1e-8;
+const double kEpsilon = 1e-8;
 
 enum nRoots
 {
@@ -25,7 +25,8 @@ enum nRoots
 *\param[in] solution_x2 Указатель на второй корень уравнения
 */
 //-----------------------------------------------------------
-enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
+enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c,
+                                   double * solution_x1, double * solution_x2);
 
 //-----------------------------------------------------------
 /**
@@ -37,7 +38,8 @@ enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_
 *\param[in] solution_x2 Указатель на второй корень уравнения
 */
 //-----------------------------------------------------------
-enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
+enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c,
+                                      double * solution_x1, double * solution_x2);
 
 //-----------------------------------------------------------
 /**
@@ -49,16 +51,6 @@ enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coe
 */
 //-----------------------------------------------------------
 enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
-
-//-----------------------------------------------------------
-/**
-*Меняет значения двух параметров местами.
-*Передаются указатели на параметры.
-*\param[in] num1 Первый параметр
-*\param[in] num2 Второй параметр
-*/
-//-----------------------------------------------------------
-void swap(double * num1, double * num2);
 
 //-----------------------------------------------------------
 /**

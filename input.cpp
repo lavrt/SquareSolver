@@ -8,12 +8,12 @@
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    my_assert (coeff_a != NULL, "The pointer to the coefficient a is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != NULL, "The pointer to the coefficient b is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_c != NULL, "The pointer to the coefficient c is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
+    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     do
     {
@@ -35,12 +35,12 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    my_assert (coeff_a != NULL, "The pointer to the coefficient a is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != NULL, "The pointer to the coefficient b is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_c != NULL, "The pointer to the coefficient c is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
+    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     printf("Enter a: ");
     while (scanf("%lf", coeff_a) != 1)
@@ -69,15 +69,15 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    my_assert (coeff_a != NULL, "The pointer to the coefficient a is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != NULL, "The pointer to the coefficient b is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_c != NULL, "The pointer to the coefficient c is NULL.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
-    my_assert (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.", __FILE__, __LINE__, __func__);
+    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     printf("\nThe equation you want to solve:\n");
-    printf("%lf*x^2 %+lf*x %+lf = 0\n", *coeff_a, *coeff_b, *coeff_c);
+    printf("%lg*x^2 %+lg*x %+lg = 0\n", *coeff_a, *coeff_b, *coeff_c);
 }
 
 int clear_buffer(void)

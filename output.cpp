@@ -15,10 +15,10 @@ void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, dou
             printf("\nThe equation has no solutions.\n");
             break;
         case ONE_SOLUTION:
-            printf("\nThe equation has one solution. x = %lf.\n", solution_x1);
+            printf("\nThe equation has one solution. x = %lg.\n", solution_x1);
             break;
         case TWO_SOLUTIONS:
-            printf("\nThe equation has two solutions. x1 = %lf, x2 = %lf.\n", solution_x1, solution_x2);
+            printf("\nThe equation has two solutions. x1 = %lg, x2 = %lg.\n", solution_x1, solution_x2);
             break;
         case ANY_NUMBER:
             printf("\nThe solution to the equation is any number.\n");

@@ -7,7 +7,7 @@
 #include "solver.h"     
 #include "output.h"
 
-int main(void)
+int main(const int argc, const char * argv[])
 {
     program_testing();
 
