@@ -3,8 +3,8 @@
 #include <math.h>
 
 #include "tester.h"
-#include "input.h"      //shell script
-#include "solver.h"     //assert написать
+#include "input.h"      
+#include "solver.h"     
 #include "output.h"
 
 int main(void)

@@ -27,7 +27,6 @@ enum nRoots
 //-----------------------------------------------------------
 enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 
-
 //-----------------------------------------------------------
 /**
 *Решает квадратное уравнение. Изменяет переменные, содержащие корни уравнения, по указателю.
@@ -40,7 +39,6 @@ enum nRoots program_solve_equation(double coeff_a, double coeff_b, double coeff_
 //-----------------------------------------------------------
 enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
 
-
 //-----------------------------------------------------------
 /**
 *Решает линейное уравнение. Изменяет переменные, содержащие корни уравнения, по указателю.
@@ -51,10 +49,6 @@ enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coe
 */
 //-----------------------------------------------------------
 enum nRoots solver_linear_equation(double coeff_b, double coeff_c, double * solution_x1, double * solution_x2);
-
-
-
-
 
 //-----------------------------------------------------------
 /**
@@ -75,11 +69,13 @@ void swap(double * num1, double * num2);
 //-----------------------------------------------------------
 bool double_equals(double num1, double num2);
 
+//-----------------------------------------------------------
 /**
 *С заданной точностью определяет, равны ли два параметра типа double друг другу.
 *\param[in] num1 Первый параметр
 *\param[in] num2 Второй параметр
 */
+//-----------------------------------------------------------
 bool double_equals(double num1, double num2);
 
 #endif // SOLVER_H

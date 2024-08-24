@@ -29,7 +29,7 @@ void program_testing(void) // void to int
 
 enum condition run_test(struct testData * data)
 {    
-    my_assert (data != NULL);
+    my_assert(data != NULL, "The pointer to the struct testData is NULL.", __FILE__, __LINE__, __func__);
     
     double solution_x1 = 0;
     double solution_x2 = 0;
@@ -38,8 +38,8 @@ enum condition run_test(struct testData * data)
 
     if (my_isnan(solution_x1) || my_isnan(solution_x2) || my_isnan(data -> solution_x1_expected) || my_isnan(data -> solution_x2_expected))
     {
-        my_assert(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected));
-        my_assert(my_isnan(solution_x1) && my_isnan(solution_x2));
+        my_assert(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected), "Either both solutions are finite or both numbers are NaN", __FILE__, __LINE__, __func__);
+        my_assert(my_isnan(solution_x1) && my_isnan(solution_x2), "Either both solutions are finite or both numbers are NaN", __FILE__, __LINE__, __func__);
     }
 
     if (!(my_isnan(data -> solution_x1_expected) && my_isnan(data -> solution_x2_expected)) && (data -> solution_x1_expected > data -> solution_x2_expected)) 
