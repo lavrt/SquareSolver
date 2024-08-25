@@ -3,17 +3,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <ctype.h>
 
 #include "supportive.h"
 
 void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
-    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
-    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
-    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT(coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT(coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT(coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     do
     {
@@ -30,51 +31,52 @@ void program_get_num(double * coeff_a, double * coeff_b, double * coeff_c)
             break;
         }
 
-    } while (true);
+    } while (getchar() != EOF);
 }
 
 void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
-    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
-    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
-    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT(coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT(coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT(coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
+    int char_accepted = 0;
+
     printf("Enter a: ");
-    while (scanf("%lf", coeff_a) != 1)
+    while (((char_accepted = scanf("%lf", coeff_a)) && ((getchar() != '\n'))) || char_accepted != 1)
     {
+        ++number_of_attempts;
         printf("\nPlease enter the correct numeric value.\nEnter a: ");
         clear_buffer();
     }
-    clear_buffer();
 
     printf("Enter b: ");
-    while (scanf("%lf", coeff_b) != 1)
+    while (((char_accepted = scanf("%lf", coeff_b)) && ((getchar() != '\n') )) || char_accepted != 1)
     {
         printf("\nPlease enter the correct numeric value.\nEnter b: ");
         clear_buffer();
     }
-    clear_buffer();
 
     printf("Enter c: ");
-    while (scanf("%lf", coeff_c) != 1)
+    while (((char_accepted = scanf("%lf", coeff_c)) && ((getchar() != '\n') )) || char_accepted != 1)
     {
         printf("\nPlease enter the correct numeric value.\nEnter c: ");
         clear_buffer();
     }
-    clear_buffer();
 }
+
 
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
 {
-    ASSERT (coeff_a != NULL, "The pointer to the coefficient a is NULL.");
-    ASSERT (coeff_b != NULL, "The pointer to the coefficient b is NULL.");
-    ASSERT (coeff_c != NULL, "The pointer to the coefficient c is NULL.");
-    ASSERT (coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
-    ASSERT (coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != NULL, "The pointer to the coefficient a is NULL.");
+    ASSERT(coeff_b != NULL, "The pointer to the coefficient b is NULL.");
+    ASSERT(coeff_c != NULL, "The pointer to the coefficient c is NULL.");
+    ASSERT(coeff_a != coeff_b, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_b != coeff_c, "The pointers to the coefficients occupied one memory cell.");
+    ASSERT(coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     printf("\nThe equation you want to solve:\n");
     printf("%lg*x^2 %+lg*x %+lg = 0\n", *coeff_a, *coeff_b, *coeff_c);
@@ -92,7 +94,7 @@ bool get_choice(void)
     printf("Enter 'y' if you want to continue, otherwise enter 'n': ");
 
     int ch = 0;
-    while ((ch = getchar()) != 'y' && ch != 'n')
+    while ((ch = getchar()) != 'y' && ch != 'n' && ch != EOF)
     {
         if (ch != '\n')
             printf("Enter 'y' or 'n' without quotes.\n");

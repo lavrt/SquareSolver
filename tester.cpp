@@ -38,6 +38,10 @@ int program_testing(enum PrintTests flag) // void to int
                 printf( COLOR_RED FORMAT_BOLD "Test %d failed" COLOR_BLACK FORMAT_BOLD "\n", index + 1);
             }
         }
+        else
+        {
+            run_test(&array_of_tests[index]);
+        }
     }
 
     return number_of_failed_tests;
@@ -82,9 +86,9 @@ enum condition run_test(struct testData * data)
         || !double_equals_with_support_nan(solution_x2, data -> solution_x2_expected))
     {
         printf( COLOR_RED FORMAT_BOLD "\n#         Error test %d.\n"
-               "          a = %lf, b = %lf, c = %lf.\n"
-               "          x1 = %lf, x2 = %lf, count_of_roots = %d.\n"
-               "Expected: x1 = %lf, x2 = %lf, count_of_roots = %d.\n\n" COLOR_BLACK FORMAT_OFF ,
+               "          a = %lg, b = %lg, c = %lg.\n"
+               "          x1 = %lg, x2 = %lg, count_of_roots = %d.\n"
+               "Expected: x1 = %lg, x2 = %lg, count_of_roots = %d.\n\n" COLOR_BLACK FORMAT_OFF ,
                data -> num_of_test,
                data -> coeff_a, data -> coeff_b, data -> coeff_c,
                solution_x1, solution_x2, count_of_roots,
