@@ -46,7 +46,7 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     
     int char_accepted = 0;
     printf("Enter a: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_a)) && detecting_number())
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_a)) && detecting_extra_data())
         || (char_accepted != 1)); ++number_of_attempts)
     {
         printf("\nPlease enter the correct numeric value.\nEnter a: ");
@@ -54,7 +54,7 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     }
     
     printf("Enter b: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_b)) && detecting_number())
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_b)) && detecting_extra_data())
         || (char_accepted != 1)); ++number_of_attempts)
     {
         printf("\nPlease enter the correct numeric value.\nEnter b: ");
@@ -62,7 +62,7 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     }
 
     printf("Enter c: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_c)) && detecting_number())
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_c)) && detecting_extra_data())
         || (char_accepted != 1)); ++number_of_attempts)
     {
         printf("\nPlease enter the correct numeric value.\nEnter c: ");
@@ -107,12 +107,12 @@ bool get_choice(void)
     return ch == 'y';
 }
 
-bool detecting_number(void)
+bool detecting_extra_data(void)
 {
     int ch = getchar();
-    while (!isdigit(ch) && ch != '\n')   
+    while (isspace(ch) && ch != '\n')   
     {
         ch = getchar();
     }
-    return (isdigit(ch)) ? true : false;
+    return (!isspace(ch)) ? true : false;
 }

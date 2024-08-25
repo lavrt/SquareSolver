@@ -55,6 +55,6 @@ bool get_choice(void);
 *Проверяет, есть ли в потоке stdin числовое знчение, пока не встретит символ новой строки.
 */
 //-----------------------------------------------------------
-bool detecting_number(void);
+bool detecting_extra_data(void);
 
 #endif // INPUT_H
