@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #include "supportive.h"
 
@@ -44,28 +45,29 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     ASSERT(coeff_a != coeff_c, "The pointers to the coefficients occupied one memory cell.");
     
     int char_accepted = 0;
-
     printf("Enter a: ");
-    while (((char_accepted = scanf("%lf", coeff_a)) && ((getchar() != '\n'))) || char_accepted != 1)
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_a)) && detecting_number())
+        || (char_accepted != 1)); ++number_of_attempts)
     {
-        ++number_of_attempts;
         printf("\nPlease enter the correct numeric value.\nEnter a: ");
         clear_buffer();
     }
-
+    
     printf("Enter b: ");
-    while (((char_accepted = scanf("%lf", coeff_b)) && ((getchar() != '\n') )) || char_accepted != 1)
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_b)) && detecting_number())
+        || (char_accepted != 1)); ++number_of_attempts)
     {
         printf("\nPlease enter the correct numeric value.\nEnter b: ");
         clear_buffer();
     }
 
     printf("Enter c: ");
-    while (((char_accepted = scanf("%lf", coeff_c)) && ((getchar() != '\n') )) || char_accepted != 1)
+    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_c)) && detecting_number())
+        || (char_accepted != 1)); ++number_of_attempts)
     {
         printf("\nPlease enter the correct numeric value.\nEnter c: ");
         clear_buffer();
-    }
+    }    
 }
 
 
@@ -103,4 +105,14 @@ bool get_choice(void)
     }
 
     return ch == 'y';
+}
+
+bool detecting_number(void)
+{
+    int ch = getchar();
+    while (!isdigit(ch) && ch != '\n')   
+    {
+        ch = getchar();
+    }
+    return (isdigit(ch)) ? true : false;
 }
