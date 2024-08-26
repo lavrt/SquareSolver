@@ -46,30 +46,26 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c)
     
     int char_accepted = 0;
     printf("Enter a: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_a)) && detecting_extra_data())
-        || (char_accepted != 1)); ++number_of_attempts)
+    while (((char_accepted = scanf("%lf", coeff_a)) && detecting_extra_data()) || (char_accepted != 1))
     {
         printf("\nPlease enter the correct numeric value.\nEnter a: ");
-        clear_buffer();
+        if (clear_buffer()) break;
     }
     
     printf("Enter b: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_b)) && detecting_extra_data())
-        || (char_accepted != 1)); ++number_of_attempts)
+    while (((char_accepted = scanf("%lf", coeff_b)) && detecting_extra_data()) || (char_accepted != 1))
     {
         printf("\nPlease enter the correct numeric value.\nEnter b: ");
-        clear_buffer();
+        if (clear_buffer()) break;
     }
 
     printf("Enter c: ");
-    for (int number_of_attempts = 0; (((char_accepted = scanf("%lf", coeff_c)) && detecting_extra_data())
-        || (char_accepted != 1)); ++number_of_attempts)
+    while (((char_accepted = scanf("%lf", coeff_c)) && detecting_extra_data()) || (char_accepted != 1))
     {
         printf("\nPlease enter the correct numeric value.\nEnter c: ");
-        clear_buffer();
+        if (clear_buffer()) break;
     }    
 }
-
 
 void print_equation(double * coeff_a, double * coeff_b, double * coeff_c)
 {

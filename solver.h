@@ -9,10 +9,10 @@ const double kEpsilon = 1e-8;
 
 enum nRoots
 {
-    NO_SOLUTIONS = 0,
-    ONE_SOLUTION = 1,
+    NO_SOLUTIONS  = 0,
+    ONE_SOLUTION  = 1,
     TWO_SOLUTIONS = 2,
-    ANY_NUMBER = 3,
+    ANY_NUMBER    = 3,
 }; 
 
 //-----------------------------------------------------------

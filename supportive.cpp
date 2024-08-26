@@ -14,9 +14,12 @@ bool my_isnan(double num)
 void my_assert(bool statement, const char * error_message, const char * file_name,
                int number_of_string, const char * func_name) 
 {
-    if (statement) { return ; }
+    if (statement) { return; }
     
-    fprintf(stderr, COLOR_RED FORMAT_BOLD "\nError\n%s:%d\n%s\n%s\n" COLOR_BLACK FORMAT_OFF "\n",
+    fprintf(stderr,
+            COLOR_RED FORMAT_BOLD 
+            "\nError\n%s:%d\n%s\n%s\n"
+            COLOR_BLACK FORMAT_OFF,
             file_name, number_of_string, func_name, error_message); 
     abort();
 } 

@@ -11,7 +11,7 @@
 
 void start_program(void)
 {
-    program_testing(PRINT_OFF);
+    read_and_run_tests(PRINT_OFF);
 
     do
     {
@@ -44,14 +44,17 @@ void info(void)
 
 void test(void)
 {
-    putchar('\n');
-    if (!program_testing(PRINT_ON))
+    if (!read_and_run_tests(PRINT_ON))
     {
-        puts( COLOR_BLUE FORMAT_BOLD "All tests passed successfully" COLOR_BLUE FORMAT_BOLD "\n");
+        puts( COLOR_BLUE FORMAT_BOLD 
+        "\nAll tests passed successfully\n" 
+        COLOR_BLUE FORMAT_BOLD);
     }
     else
     {
-        puts( COLOR_BLUE FORMAT_BOLD "There are failed tests" COLOR_BLUE FORMAT_BOLD "\n");
+        puts( COLOR_BLUE FORMAT_BOLD 
+        "\nThere are failed tests\n" 
+        COLOR_BLUE FORMAT_BOLD);
     }
 }
 

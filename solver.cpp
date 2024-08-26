@@ -1,7 +1,7 @@
 #include "solver.h"
 
 #include <stdio.h>
-#include <stdbool.h> // argc argv
+#include <stdbool.h> 
 #include <math.h>
 
 #include "supportive.h"
@@ -49,7 +49,7 @@ enum nRoots solver_quadratic_equation(double coeff_a, double coeff_b, double coe
     {
         *solution_x1 = NAN;
         *solution_x2 = NAN; 
-        return NO_SOLUTIONS;                                                                                                // header guard
+        return NO_SOLUTIONS;                                                                                             
     }
 }
 

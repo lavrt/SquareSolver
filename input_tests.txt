@@ -1,0 +1,7 @@
+count_of_tests: 6
+1 0 0  0 NAN NAN 3
+2 0 0  9 NAN NAN 0
+3 0 2  6 -3  -3  1
+4 1 -2 1 1   1 1
+5 2 -7 5 1   2.5 2
+6 1 1  1 NAN NAN 0
