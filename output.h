@@ -1,6 +1,8 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
+#include "solver.h"
+
 /*!
 \file
 */
@@ -15,6 +17,6 @@
 *\param[in] solution_x2 Второй корень уравнения
 */
 //-----------------------------------------------------------
-void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2);
+void program_print_solutions(enum nRoots count_of_roots, double solution_x1, double solution_x2);
 
 #endif // OUTPUT_H

@@ -5,11 +5,11 @@
 #include <math.h>
 
 #include "solver.h"
+#include "supportive.h"
 
-void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, double solution_x1, double solution_x2)
+void program_print_solutions(enum nRoots count_of_roots, double solution_x1, double solution_x2)
 {
-    int count_of_roots = program_solve_equation(coeff_a, coeff_b, coeff_c, &solution_x1, &solution_x2);
-    switch (count_of_roots) 
+    switch (count_of_roots)
     {
         case NO_SOLUTIONS:
             printf("\nThe equation has no solutions.\n");
@@ -24,6 +24,6 @@ void program_print_solutions(double coeff_a, double coeff_b, double coeff_c, dou
             printf("\nThe solution to the equation is any number.\n");
             break;
         default:
-            printf("\nUnexpected error!\n");
+            ASSERT(0, "\nUnexpected error!\n");
     }
 }

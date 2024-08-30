@@ -34,7 +34,7 @@ void take_values(double * coeff_a, double * coeff_b, double * coeff_c);
 *\param[in] coeff_c Указатель на коэффициент c
 */
 //-----------------------------------------------------------
-void print_equation(double * coeff_a, double * coeff_b, double * coeff_c);
+void print_equation(double coeff_a, double coeff_b, double coeff_c);
 
 //-----------------------------------------------------------
 /**

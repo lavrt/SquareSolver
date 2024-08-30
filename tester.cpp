@@ -9,7 +9,7 @@
 #include "formatting.h"
 
 enum condition run_test(struct testData data)
-{    
+{
     double solution_x1 = 0;
     double solution_x2 = 0;
 
@@ -30,35 +30,37 @@ enum condition run_test(struct testData data)
 
     if (!(my_isnan(data.solution_x1_expected)
         && my_isnan(data.solution_x2_expected))
-        && (data.solution_x1_expected > data.solution_x2_expected)) 
+        && (data.solution_x1_expected > data.solution_x2_expected))
     {
-        swap(&(data.solution_x1_expected), &(data.solution_x2_expected));    
+        swap(&(data.solution_x1_expected), &(data.solution_x2_expected));
     }
 
     if (!(my_isnan(solution_x1) && my_isnan(solution_x2)) && (solution_x1 > solution_x2))
     {
         swap(&solution_x1, &solution_x2);
-    } 
-        
+    }
+
     if (!double_equals_with_support_nan(count_of_roots, data.count_of_different_roots_expected)
         || !double_equals_with_support_nan(solution_x1, data.solution_x1_expected)
         || !double_equals_with_support_nan(solution_x2, data.solution_x2_expected))
     {
-        printf( COLOR_RED FORMAT_BOLD "\n#         Error test %d.\n"
+        printf(COLOR_RED FORMAT_BOLD
+               "\n#         Error test %d.\n"
                "          a = %lg, b = %lg, c = %lg.\n"
                "          x1 = %lg, x2 = %lg, count_of_roots = %d.\n"
-               "Expected: x1 = %lg, x2 = %lg, count_of_roots = %d.\n\n" COLOR_BLACK FORMAT_OFF ,
+               "Expected: x1 = %lg, x2 = %lg, count_of_roots = %d.\n\n"
+               COLOR_RESET,
                data.num_of_test,
                data.coeff_a, data.coeff_b, data.coeff_c,
                solution_x1, solution_x2, count_of_roots,
                data.solution_x1_expected, data.solution_x2_expected, data.count_of_different_roots_expected);
-        return FAILURE; 
+        return FAILURE;
     }
     return SUCCESS;
 }
 
 bool double_equals_with_support_nan(double num1, double num2)
-{ 
+{
     if (my_isnan(num1) && my_isnan(num2))
         return true;
     else
@@ -71,26 +73,38 @@ int read_and_run_tests(enum PrintTests flag)
     int count_of_tests = 0;
 
     struct testData data = {};
-    
+
     FILE * input_tests = fopen("input_tests.txt", "r");
 
     fscanf(input_tests, "count_of_tests: %d", &count_of_tests);
 
     for (int index = 0; index < count_of_tests; ++index)
     {
-        fscanf(input_tests, "%d%lf%lf%lf%lf%lf%d", &data.num_of_test, &data.coeff_a, &data.coeff_b, &data.coeff_c,
-               &data.solution_x1_expected, &data.solution_x2_expected, &data.count_of_different_roots_expected);
-        
+        fscanf(input_tests, "%d%lf%lf%lf%lf%lf%d",
+               &data.num_of_test,
+               &data.coeff_a,
+               &data.coeff_b,
+               &data.coeff_c,
+               &data.solution_x1_expected,
+               &data.solution_x2_expected,
+               &data.count_of_different_roots_expected);
+
         if (flag == PRINT_ON)
         {
             if (run_test(data) == SUCCESS)
             {
-                printf( COLOR_GREEN FORMAT_BOLD "Test %d passed successfully" COLOR_BLACK FORMAT_OFF "\n", index + 1);
+                printf(COLOR_GREEN FORMAT_BOLD
+                       "Test %d passed successfully\n"
+                       COLOR_RESET,
+                       index + 1);
             }
             else
             {
                 ++number_of_failed_tests;
-                printf( COLOR_RED FORMAT_BOLD "Test %d failed" COLOR_BLACK FORMAT_BOLD "\n", index + 1);
+                printf(COLOR_RED FORMAT_BOLD
+                       "Test %d failed\n"
+                       COLOR_RESET,
+                       index + 1);
             }
         }
         else

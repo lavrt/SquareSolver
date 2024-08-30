@@ -2,8 +2,13 @@
 #define FLAGS_H
 
 /*!
-\file 
+\file
 */
+
+static const char * USER_FLAG    = "--user";
+static const char * TEST_FLAG    = "--test";
+static const char * HELP_FLAG    = "--help";
+static const char * VERSION_FLAG = "--version";
 
 enum compilationFlag
 {

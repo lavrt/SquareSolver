@@ -10,9 +10,9 @@ struct testData
     int num_of_test;
     double coeff_a;
     double coeff_b;
-    double coeff_c; 
+    double coeff_c;
     double solution_x1_expected;
-    double solution_x2_expected; 
+    double solution_x2_expected;
     int count_of_different_roots_expected;
 };
 
@@ -20,7 +20,7 @@ enum condition
 {
     SUCCESS = 0,
     FAILURE = 1,
-}; 
+};
 
 enum PrintTests
 {
@@ -33,7 +33,7 @@ enum PrintTests
 *Запускает тест квадратного уравнения.
 */
 //-----------------------------------------------------------
-enum condition run_test(struct testData * data);
+enum condition run_test(struct testData data);
 
 //-----------------------------------------------------------
 /**
